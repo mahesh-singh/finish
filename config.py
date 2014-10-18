@@ -10,7 +10,7 @@ class ProdConfig(Config):
 	SQLALCHEMY_DATABASE_URI = ''	
 
 class DevConfig(Config):
-	SQLALCHEMY_DATABASE_URI = ''
+	SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123456@localhost/finish'
 
 class QAConfig(Config):
 	SQLALCHEMY_DATABASE_URI = ''		

@@ -1,5 +1,8 @@
 finish
 ======
+#Install psycopg
+easy_install http://www.stickpeople.com/projects/python/win-psycopg/2.5.4/psycopg2-2.5.4.win-amd64-py2.7-pg9.3.5-release.ex
+
 
 #Refrence
 - http://docs.python-guide.org/en/latest/
