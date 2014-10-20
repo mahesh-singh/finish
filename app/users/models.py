@@ -10,6 +10,8 @@ class User(db.Model):
 	full_name = db.Column(db.String(200))
 	email = db.Column(db.String(200), unique = True)
 	profile_url = db.Column(db.String(1000))
+	profile_pic = db.Column(db.String(1000))
+	verified_email = db.Column(db.Boolean)
 	created_on = db.Column(db.DateTime, default = db.func.now())
 	updated_on = db.Column(db.DateTime, default = db.func.now(), onupdate = db.func.now())
 
@@ -20,8 +22,23 @@ class User(db.Model):
 		self.email = email
 		self.profile_url = profile_url
 	
-	def __repr__(self):
-		return "<User(%d, %s, %s)>" % (self.id, self.full_name, self.email)
-
-
 	
+
+
+	@classmethod
+	def get_or_set(cls, data):
+		"""
+        data contains:
+            {u'family_name': u'Surname',
+            u'name': u'Name Surname',
+            u'picture': u'https://link.to.photo',
+            u'locale': u'en',
+            u'gender': u'male',
+            u'email': u'propper@email.com',
+            u'birthday': u'0000-08-17',
+            u'link': u'https://plus.google.com/id',
+            u'given_name': u'Name',
+            u'id': u'Google ID',
+            u'verified_email': True}
+        """
+        
