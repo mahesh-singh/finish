@@ -1,0 +1,15 @@
+{
+  "name": "bootstrap-3.3.0-dist",
+  "_cacheHeaders": {
+    "ETag": "\"7e2ba841e15aff2f572649a8e9f9b69c\"",
+    "Last-Modified": "Wed, 29 Oct 2014 19:16:31 GMT",
+    "Content-Length": "230095",
+    "Content-Type": "application/octet-stream",
+    "Content-Disposition": "attachment; filename=bootstrap-3.3.0-dist.zip"
+  },
+  "_release": "e-tag:7e2ba841e",
+  "_source": "https://github.com/twbs/bootstrap/releases/download/v3.3.0/bootstrap-3.3.0-dist.zip",
+  "_target": "*",
+  "_originalSource": "https://github.com/twbs/bootstrap/releases/download/v3.3.0/bootstrap-3.3.0-dist.zip",
+  "_direct": true
+}
