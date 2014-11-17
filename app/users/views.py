@@ -3,7 +3,7 @@ import urllib2
 import json
 
 from flask import Blueprint, request, render_template, redirect, url_for
-from flask.ext.login import login_user
+from flask.ext.login import login_user, login_required
 
 from app import db
 from app.users.models import User
@@ -11,6 +11,11 @@ from app import config
 from app import login_manager
 mod = Blueprint('users', __name__, url_prefix='/users')
 
+
+@mod.route('/')
+@login_required
+def home():
+	return render_template('users/index.html')
 
 
 @mod.route('/login')
@@ -35,7 +40,7 @@ def auth():
 
 	user = User.get_or_create(data)
 	login_user(user)
-	return redirect(request.args.get('next'))
+	return redirect(request.args.get('next') or  url_for('users.home'))
 
 #private method
 def _get_token():
@@ -61,6 +66,3 @@ def _get_data(response):
 	req = urllib2.Request(url)  # must be GET
 
 	return json.loads(urllib2.urlopen(req).read())
-
-
-#ref http://stackoverflow.com/questions/9499286/using-google-oauth2-with-flask

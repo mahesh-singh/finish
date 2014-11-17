@@ -1,7 +1,8 @@
 from app import db
 from app.users import constants as USER
-
+from app import login_manager
 from sqlalchemy.orm.exc import NoResultFound
+
 
 class User(db.Model):
 	__tablename__ = 'users'
@@ -10,7 +11,7 @@ class User(db.Model):
 	f_name = db.Column(db.String(100))
 	l_name = db.Column(db.String(100))
 	full_name = db.Column(db.String(200))
-	email = db.Column(db.String(200), unique = True)
+	email = db.Column(db.String(200), unique = True, nullable=False)
 	profile_url = db.Column(db.String(1000))
 	profile_pic = db.Column(db.String(1000))
 	verified_email = db.Column(db.Boolean)
@@ -20,7 +21,7 @@ class User(db.Model):
 	def __init__(self, f_name, l_name, full_name, email, profile_url, profile_pic, verified_email):
 		self.f_name = f_name
 		self.l_name = l_name
-		self.full_name = name
+		self.full_name = full_name
 		self.email = email
 		self.profile_url = profile_url
 		self.profile_pic = profile_pic
@@ -43,6 +44,10 @@ class User(db.Model):
 	def is_anonymous(self):
 		return False
 
+	@login_manager.user_loader
+	def load_user(user_id):
+		return User.query.get(int(user_id))
+
 	@classmethod
 	def get_or_create(cls, data):
 		"""
@@ -59,13 +64,12 @@ class User(db.Model):
             u'id': u'Google ID',
             u'verified_email': True}
 		"""
-
 		try:
 
 			user = cls.query.filter_by(email = data['email']).one()
 			#Update user
-			user.f_name = data['family_name']
-			user.l_name = data['given_name']
+			user.f_name = data['given_name']
+			user.l_name = data['family_name']
 			user.full_name = data['name'],
 			user.profile_url = data['link'],
 			user.profile_pic = data['picture'],
@@ -73,8 +77,8 @@ class User(db.Model):
 			db.session.commit()
 			return user
 		except NoResultFound:
-			user = cls(f_name = data['family_name'],
-				l_name = data['given_name'],
+			user = cls(f_name = data['given_name'],
+				l_name = data['family_name'],
 				full_name = data['name'],
 				email = data['email'],
 				profile_url = data['link'],
